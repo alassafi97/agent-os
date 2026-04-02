@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Agent outputs (user-specific)
+outputs/
+
+# Internal planning
+plan.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
