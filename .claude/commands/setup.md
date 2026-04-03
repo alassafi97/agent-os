@@ -180,14 +180,14 @@ Present this table:
 | Service | What it does | Price | Get a key |
 |---------|-------------|-------|-----------|
 | **Exa** | AI-powered web search — finds companies, people, news by meaning not just keywords | Free 1K searches/mo | dashboard.exa.ai |
-| **Firecrawl** | Scrapes any website into clean text — reads company sites, competitor pages | Free 500 pages one-time, then $16/mo | firecrawl.dev |
-| **Apify** | LinkedIn scraping — profiles, company pages, post comments | Free $5/mo credits (~1,000 profiles) | console.apify.com |
-| **Apollo** | Lead database — find companies and people by filters, get verified emails | $49/mo (best lead data available) | app.apollo.io |
-| **Instantly** | Sends cold email campaigns automatically — sequences with follow-ups | $30/mo | app.instantly.ai |
-| **HeyReach** | Sends LinkedIn outreach campaigns — connection requests + DMs | $79/mo | app.heyreach.io |
+| **Firecrawl** | Scrapes any website into clean text — reads company sites, competitor pages | Free 500 pages, then $16/mo | firecrawl.dev |
+| **Apify** | LinkedIn scraping — profiles, company pages, post comments | Free $5/mo credits, then $49/mo | console.apify.com |
+| **Apollo** | Lead database — find companies and people by filters, get verified emails | From $49/mo | app.apollo.io |
+| **Instantly** | Sends cold email campaigns automatically — sequences with follow-ups | From $30/mo | app.instantly.ai |
+| **HeyReach** | Sends LinkedIn outreach campaigns — connection requests + DMs | From $79/mo | app.heyreach.io |
 | **Hunter** | Finds email addresses from company domains — backup when Apollo misses | Free 50 searches/mo | hunter.io |
-| **Deepgram** | Transcribes audio — used to extract spoken hooks from Instagram reels | Free $200 credits | console.deepgram.com |
-| **Fireflies** | Call notetaker — pull meeting transcripts for research and voice learning | Free plan available | fireflies.ai |
+| **Deepgram** | Transcribes audio — used to extract spoken hooks from Instagram reels | Free $200 credits, then $4/hr | console.deepgram.com |
+| **Fireflies** | Call notetaker — pull meeting transcripts for research and voice learning | Free plan, then $19/mo | fireflies.ai |
 
 **My recommendation to start:** Exa (free) + Apify (free) gets you research + LinkedIn scraping. That unlocks Pluto, Atlas, Themis, Felix, and Artemis. Add more as you need them.
 
