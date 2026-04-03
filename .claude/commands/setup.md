@@ -150,11 +150,28 @@ Then tell the user:
 
 **How keys are handled:** Your keys are stored locally in a `.env` file that never gets shared or committed to git. When an agent needs to call an API (like Apify or Apollo), Claude reads the key from `.env` and makes the call. Your keys are never saved in output files or displayed in chat.
 
-Which of these do you have?"
+Here's what each service does and costs:"
 
-List the services from `.env.example` and ask which ones they use. For each one they have:
+Present this table:
+
+| Service | What it does | Price | Get a key |
+|---------|-------------|-------|-----------|
+| **Exa** | AI-powered web search — finds companies, people, news by meaning not just keywords | Free 1K searches/mo | dashboard.exa.ai |
+| **Firecrawl** | Scrapes any website into clean text — reads company sites, competitor pages | Free 500 pages one-time, then $16/mo | firecrawl.dev |
+| **Apify** | LinkedIn scraping — profiles, company pages, post comments | Free $5/mo credits (~1,000 profiles) | console.apify.com |
+| **Apollo** | Lead database — find companies and people by filters, get verified emails | $49/mo (best lead data available) | app.apollo.io |
+| **Instantly** | Sends cold email campaigns automatically — sequences with follow-ups | $30/mo | app.instantly.ai |
+| **HeyReach** | Sends LinkedIn outreach campaigns — connection requests + DMs | $79/mo | app.heyreach.io |
+| **Hunter** | Finds email addresses from company domains — backup when Apollo misses | Free 50 searches/mo | hunter.io |
+| **Deepgram** | Transcribes audio — used to extract spoken hooks from Instagram reels | Free $200 credits | console.deepgram.com |
+
+**My recommendation to start:** Exa (free) + Apify (free) gets you research + LinkedIn scraping. That unlocks Pluto, Atlas, Themis, Felix, and Artemis. Add more as you need them.
+
+Tell me which ones you have and add them to your `.env` file, or say 'skip' to set up keys later."
+
+For each key the user says they have:
 - Tell them to open `.env` in their text editor
-- Tell them where to find the key (link is in `.env.example`)
+- Tell them the exact variable name to fill in (e.g., `EXA_API_KEY=your-key-here`)
 - Confirm they've added it
 
 ### Step 4: Validation
