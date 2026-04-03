@@ -22,16 +22,18 @@ Display this banner first:
 Then tell the user:
 "Welcome to Agent OS! Let's get you set up. I need to know about your business so every agent can work for you.
 
+**Quick tip before we start:** If you have an Exa API key (free at https://dashboard.exa.ai/api-keys), add it to your `.env` file now. It lets me research your company, competitors, and industry automatically — which means I'll draft a way more accurate profile for you instead of guessing. Without it, I'll work off your website alone.
+
 **Two ways to do this — pick whichever is faster:**
 
 **Option A: Drop context in.** Paste or attach any of these and I'll extract everything I need:
-- Your website URL (I'll scrape it)
+- Your website URL (I'll scrape it — and research you with Exa if the key is set up)
 - A pitch deck, proposal, or one-pager
 - An existing CLAUDE.md or company description
 - A previous brand guide or messaging doc
 - Or just paste a few paragraphs about your business
 
-**Option B: I'll ask you questions.** Takes about 5 minutes — I'll go one section at a time.
+**Option B: I'll ask you a couple of questions** and build your profile from there.
 
 Either way works. What do you want to do?"
 
