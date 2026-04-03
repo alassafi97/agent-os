@@ -19,23 +19,43 @@ Display this banner first:
                     ⚡ Setup Wizard
 ```
 
-Then tell the user:
-"Welcome to Agent OS! Let's get you set up. I need to know about your business so every agent can work for you.
+Then check if `.env` exists and whether `EXA_API_KEY` is set. 
 
-**Quick tip before we start:** If you have an Exa API key (free at https://dashboard.exa.ai/api-keys), add it to your `.env` file now. It lets me research your company, competitors, and industry automatically — which means I'll draft a way more accurate profile for you instead of guessing. Without it, I'll work off your website alone.
+**If no .env exists**, create it first:
+```bash
+cp .env.example .env
+```
+
+**If EXA_API_KEY is empty or missing**, ask the user BEFORE anything else:
+
+"Welcome to Agent OS! Before we start — **do you have an Exa API key?**
+
+Exa is a free AI search engine I use to research your company, competitors, and industry. With it, I can auto-build most of your profile instead of asking you a bunch of questions. Without it, I'll have to work from your website alone.
+
+**It's free** — takes 30 seconds: https://dashboard.exa.ai/api-keys
+
+Got one? Paste it here and I'll add it to your `.env`. Or say 'skip' to continue without it."
+
+If the user provides a key, write it to `.env` (the `EXA_API_KEY=` line). Then continue.
+
+**If EXA_API_KEY already exists**, skip this and move on.
+
+### Step 1B: Context gathering
+
+"Great — now let's build your profile.
 
 **Two ways to do this — pick whichever is faster:**
 
 **Option A: Drop context in.** Paste or attach any of these and I'll extract everything I need:
-- Your website URL (I'll scrape it — and research you with Exa if the key is set up)
+- Your website URL (I'll scrape it and research you)
 - A pitch deck, proposal, or one-pager
 - An existing CLAUDE.md or company description
 - A previous brand guide or messaging doc
 - Or just paste a few paragraphs about your business
 
-**Option B: I'll ask you a couple of questions** and build your profile from there.
+**Option B: Just tell me your company name and website** and I'll do the rest.
 
-Either way works. What do you want to do?"
+What do you want to do?"
 
 ### Step 2: Business Profile (config.md)
 
