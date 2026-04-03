@@ -132,13 +132,16 @@ What should I change?"
 **Round 3: Learn their voice (from examples, not adjectives)**
 Don't ask "how would you describe your tone?" — that gets useless answers like "professional but friendly."
 
-Instead ask: "Drop me 1-2 examples of writing you've done that sounds like YOU. Could be:
+Instead ask: "Drop me 1-2 examples of writing or speaking that sounds like YOU. Could be:
 - A cold email or DM you've sent
 - A LinkedIn post or caption
 - A sales page or proposal
+- A discovery call transcript (from Fireflies, Fathom, Otter, etc.)
 - Even a voice note transcript
 
-I'll learn your voice from the real thing."
+I'll learn your voice from the real thing.
+
+**Got a call notetaker?** If you use Fireflies, I can pull your transcripts directly (add your API key later). Or just paste a transcript from any notetaker — Fathom, Otter, whatever you use."
 
 If they provide examples, analyze them for:
 - Sentence length and structure
@@ -184,6 +187,7 @@ Present this table:
 | **HeyReach** | Sends LinkedIn outreach campaigns — connection requests + DMs | $79/mo | app.heyreach.io |
 | **Hunter** | Finds email addresses from company domains — backup when Apollo misses | Free 50 searches/mo | hunter.io |
 | **Deepgram** | Transcribes audio — used to extract spoken hooks from Instagram reels | Free $200 credits | console.deepgram.com |
+| **Fireflies** | Call notetaker — pull meeting transcripts for research and voice learning | Free plan available | fireflies.ai |
 
 **My recommendation to start:** Exa (free) + Apify (free) gets you research + LinkedIn scraping. That unlocks Pluto, Atlas, Themis, Felix, and Artemis. Add more as you need them.
 
