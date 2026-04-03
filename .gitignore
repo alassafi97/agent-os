@@ -4,6 +4,9 @@
 # Agent outputs (user-specific)
 outputs/
 
+# Test files
+config.test.md
+
 # Internal planning
 plan.md
 

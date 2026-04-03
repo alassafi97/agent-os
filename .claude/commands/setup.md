@@ -62,7 +62,32 @@ The user should feel like they're reviewing and refining YOUR suggestions, not f
 **Round 1: Get the basics (1 question)**
 "What's your company name and website? (Or just the name — I'll look up the rest.)"
 
-If they give a website, scrape it with WebFetch to pre-fill as much as possible. Then move to Round 2 with context.
+After the user answers, gather as much context as possible before proposing:
+
+1. **Scrape their website** with WebFetch — homepage, about page, services page. Extract positioning, offerings, team size, client types.
+
+2. **Check `.env` for EXA_API_KEY.** If it exists, use Exa to deepen the research:
+   ```bash
+   curl -s "https://api.exa.ai/search" \
+     -H "x-api-key: $EXA_API_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "query": "[COMPANY NAME] company overview",
+       "numResults": 5,
+       "type": "auto",
+       "category": "company",
+       "contents": {"text": true, "highlights": true}
+     }'
+   ```
+   Also search for their competitors and industry context:
+   - "[COMPANY NAME] competitors alternatives"
+   - "[INDUSTRY] market trends"
+   
+   This gives you revenue estimates, employee count, market position, competitor names — making your config.md draft significantly better.
+
+3. If no Exa key, that's fine — work with what the website gives you.
+
+Then move to Round 2 with all this context.
 
 **Round 2: Propose the full profile (1 big draft)**
 Based on what you know, draft the ENTIRE config.md and show it to the user:
