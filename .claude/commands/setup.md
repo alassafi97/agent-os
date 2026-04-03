@@ -47,19 +47,48 @@ Either way works. What do you want to do?"
 **If the user chose questions (Option B) or if you need to fill gaps:**
 Read `config.md` to check what's already filled in.
 
-Walk through each section conversationally — ask the user one section at a time, don't dump all questions at once:
+### Approach: Propose, Don't Interrogate
 
-1. **Company basics** — "What's your company name, website, and industry?"
-2. **What you sell** — "What products or services do you offer? What's your typical price range and sales cycle?"
-3. **ICP** — "Who's your ideal customer? What role, company size, and industry are you targeting? What geography?"
-4. **Qualification criteria** — "How do you score whether a company is a good fit? Walk me through what makes a 5/5 perfect fit vs a 1/5 no-fit. Think about: business maturity, whether they have outbound already, deal size, growth appetite, and openness to tech/AI." Fill in both the criteria descriptions AND the 1-5 scoring scale in config.md.
-5. **Brand voice** — "How would you describe your brand voice? Bold and direct? Friendly? Professional? Any words or phrases you always use or always avoid?"
-6. **Differentiators** — "What makes you different from competitors? Give me your top 2-3."
-7. **Social profiles** — "Drop your LinkedIn, Instagram, or any other social links you want agents to use."
-8. **Target platforms** — "Which platforms do you primarily use for business? LinkedIn, email, Instagram, etc?" Check the relevant boxes in config.md.
-9. **Custom instructions** — "Anything else your agents should always know? Any rules or preferences?"
+**CRITICAL:** Do NOT ask open-ended homework questions. Instead:
+- **Make a hypothesis first** based on whatever you already know (company name, website, industry, prior answers)
+- **Propose a draft answer** and ask the user to confirm, tweak, or correct
+- **Offer options** when there are common patterns instead of asking from scratch
+- **Batch related questions** — don't ask 9 separate things one at a time
 
-After each answer, update `config.md` with their responses. Use their exact words where possible — don't corporate-ify their voice.
+The user should feel like they're reviewing and refining YOUR suggestions, not filling out a form.
+
+### Flow
+
+**Round 1: Get the basics (1 question)**
+"What's your company name and website? (Or just the name — I'll look up the rest.)"
+
+If they give a website, scrape it with WebFetch to pre-fill as much as possible. Then move to Round 2 with context.
+
+**Round 2: Propose the full profile (1 big draft)**
+Based on what you know, draft the ENTIRE config.md and show it to the user:
+
+"Based on [what you told me / your website], here's my read on your business. Edit anything that's off:
+
+**What you sell:** [your best guess from context]
+**ICP:** [proposed target — role, size, industry, geography]
+**Qualification criteria:** Based on your offering, here's how I'd score prospects:
+- 5/5: [proposed perfect fit]
+- 4/4: [proposed hot]
+- 3/5: [proposed warm]
+- 2/5: [proposed cold]
+- 1/5: [proposed no-fit]
+**Brand voice:** [proposed tone based on website/context — e.g., 'Bold and direct — short sentences, no fluff, numbers over adjectives']
+**Differentiators:** [proposed based on what you can infer]
+
+What should I change?"
+
+**Round 3: Fill gaps (only what's missing)**
+After the user confirms/tweaks, ask ONLY about things you genuinely couldn't infer:
+- Social profile URLs (can't guess these)
+- Platform preferences (propose based on what you see — "Looks like you're active on LinkedIn and Instagram — sound right?")
+- Custom instructions (only if the user seems like they'd have specific rules)
+
+Save everything to `config.md` after each round. Use the user's exact words — don't corporate-ify their voice.
 
 ### Step 3: API Keys (.env)
 Check if `.env` exists. If not, copy from `.env.example`:
