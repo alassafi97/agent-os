@@ -82,8 +82,30 @@ Based on what you know, draft the ENTIRE config.md and show it to the user:
 
 What should I change?"
 
-**Round 3: Fill gaps (only what's missing)**
-After the user confirms/tweaks, ask ONLY about things you genuinely couldn't infer:
+**Round 3: Learn their voice (from examples, not adjectives)**
+Don't ask "how would you describe your tone?" — that gets useless answers like "professional but friendly."
+
+Instead ask: "Drop me 1-2 examples of writing you've done that sounds like YOU. Could be:
+- A cold email or DM you've sent
+- A LinkedIn post or caption
+- A sales page or proposal
+- Even a voice note transcript
+
+I'll learn your voice from the real thing."
+
+If they provide examples, analyze them for:
+- Sentence length and structure
+- Formality level
+- Use of questions, bold claims, humor, directness
+- Words/phrases they naturally reach for
+- What they DON'T do (no emojis, no jargon, etc.)
+
+Write the Brand Voice section of config.md based on what you observe — not generic labels like "professional" but specific patterns like "Short punchy sentences. Leads with numbers. Never says 'I hope this finds you well.' Uses 'here's the thing' as a transition."
+
+If they don't have examples or skip this, propose a voice based on their website copy and let them tweak it.
+
+**Round 4: Fill remaining gaps (only what's missing)**
+After voice is captured, ask ONLY about things you genuinely couldn't infer:
 - Social profile URLs (can't guess these)
 - Platform preferences (propose based on what you see — "Looks like you're active on LinkedIn and Instagram — sound right?")
 - Custom instructions (only if the user seems like they'd have specific rules)
