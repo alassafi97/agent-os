@@ -20,13 +20,31 @@ Display this banner first:
 ```
 
 Then tell the user:
-"Welcome to Agent OS! Let's get you set up. I'll walk you through two things:
-1. Your business profile (so agents know your company, ICP, and voice)
-2. Your API keys (so agents can connect to external tools)
+"Welcome to Agent OS! Let's get you set up. I need to know about your business so every agent can work for you.
 
-This takes about 5 minutes."
+**Two ways to do this — pick whichever is faster:**
+
+**Option A: Drop context in.** Paste or attach any of these and I'll extract everything I need:
+- Your website URL (I'll scrape it)
+- A pitch deck, proposal, or one-pager
+- An existing CLAUDE.md or company description
+- A previous brand guide or messaging doc
+- Or just paste a few paragraphs about your business
+
+**Option B: I'll ask you questions.** Takes about 5 minutes — I'll go one section at a time.
+
+Either way works. What do you want to do?"
 
 ### Step 2: Business Profile (config.md)
+
+**If the user provided context (Option A):**
+- Read/scrape whatever they gave you (use WebFetch for URLs, Read for files)
+- Extract all the information needed for config.md: company name, website, industry, what they sell, ICP, voice, differentiators, etc.
+- Fill in config.md with what you found
+- Show the user what you filled in and ask: "Here's what I pulled from your context. Anything I got wrong or missing?"
+- Ask follow-up questions ONLY for sections you couldn't fill from the provided context (e.g., qualification criteria, social profiles, API keys)
+
+**If the user chose questions (Option B) or if you need to fill gaps:**
 Read `config.md` to check what's already filled in.
 
 Walk through each section conversationally — ask the user one section at a time, don't dump all questions at once:
