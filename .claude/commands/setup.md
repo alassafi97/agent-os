@@ -68,7 +68,11 @@ cp .env.example .env
 ```
 
 Then tell the user:
-"Now let's set up your API keys. You only need keys for agents you plan to use. Which of these do you have?"
+"Now let's set up your API keys. You only need keys for agents you plan to use.
+
+**How keys are handled:** Your keys are stored locally in a `.env` file that never gets shared or committed to git. When an agent needs to call an API (like Apify or Apollo), Claude reads the key from `.env` and makes the call. Your keys are never saved in output files or displayed in chat.
+
+Which of these do you have?"
 
 List the services from `.env.example` and ask which ones they use. For each one they have:
 - Tell them to open `.env` in their text editor
