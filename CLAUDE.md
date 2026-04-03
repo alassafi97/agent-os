@@ -17,7 +17,7 @@ Agent OS is a portable AI agent framework for Claude Code. This folder contains 
 
 If the user hasn't run `/setup` yet, prompt them to do so. Otherwise:
 
-> "Tell me what you want to do and I'll find the right agent. Or say 'list agents' to see everything available."
+> "Tell me what you want to do and I'll find the right agent. Or say 'list agents' to see everything available. If you want to run a full outbound campaign (find leads → research → outreach → send), try `/campaign`."
 
 ---
 
