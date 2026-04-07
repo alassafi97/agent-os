@@ -271,8 +271,12 @@ Save:
 account,video_url,caption,hook,full_transcript,likes,comments,shares,views,engagement_rate,duration_seconds,posted_date,hashtags,audio_type
 ```
 
-After saving:
-> "Done. Analyzed [X] videos across [Y] accounts. Top engagement: [Z]% from @[handle]. [N] hooks transcribed. 10 new hook ideas generated based on winning patterns. Open `outputs/tron/[filename].html` to see the full report."
+After saving, auto-open the HTML file in the browser:
+```bash
+open outputs/tron/[YYYY-MM-DD-HHMMSS]-tiktok-analysis.html
+```
+
+Then tell the user: "Done. Analyzed [X] videos across [Y] accounts. Top engagement: [Z]% from @[handle]. [N] hooks extracted. 10 hook ideas generated. Report opened in your browser."
 
 ---
 

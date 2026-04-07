@@ -154,11 +154,29 @@ curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/runs?
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
-    "startUrls": [{"url": "LINKEDIN_PROFILE_URL_1"}, {"url": "LINKEDIN_PROFILE_URL_2"}]
+    "profileUrls": ["LINKEDIN_PROFILE_URL_1", "LINKEDIN_PROFILE_URL_2"]
   }'
 ```
 
+Note: input field is `profileUrls` (array of strings), NOT `startUrls`. Cost: $0.01/profile.
+
 Save run ID, poll for `SUCCEEDED`, fetch dataset, abort — same pattern as Step 1.
+
+**Verified field names (from live test):**
+- `fullName` — full name
+- `jobTitle` — current title
+- `companyName` — current company
+- `headline` — headline string
+- `addressWithCountry` — location
+- `companyIndustry` — industry
+- `connections` — connection count
+- `followers` — follower count
+- `about` — summary/bio
+- `skills` — array of `{title}` objects
+- `experiences` — full history array (each entry has company, title, dates, `companyWebsite`)
+- `companyWebsite` — top-level current company website
+
+**Cross-validate results:** The actor sometimes returns the wrong person if LinkedIn resolves the URL ambiguously. After enrichment, check that the returned profile's `publicIdentifier` matches the slug from `author.profile_url`. If it doesn't match, discard that enrichment result and score from comment data only.
 
 Extract for each person:
 - Full name, first name, last name
@@ -237,83 +255,28 @@ Sort all commenters by ICP score (highest first). Split into tiers:
 
 ### Output Format
 
-Save the full report to `outputs/artemis/[YYYY-MM-DD-HHMMSS]-[post-description].md`
+Save as a self-contained HTML file: `outputs/artemis/[YYYY-MM-DD-HHMMSS]-[post-description].html`
 
-```markdown
-# LinkedIn Post Comment Leads: [Brief Post Description]
-**Generated:** [Date & Time]
-**Post URL:** [URL]
-**Researched for:** [User's Company Name from config.md]
-**Total commenters scraped:** [Count]
-**Profiles enriched:** [Count]
-**Above threshold (50+):** [Count]
-
----
-
-## Summary
-- 🔥 **Hot leads (80+):** [Count]
-- 🟡 **Warm leads (50-79):** [Count]
-- ❄️ **Cold / No fit (<50):** [Count]
-- ⚠️ **Competitors detected:** [Count]
-
----
-
-## 🔥 Hot Leads (80-100)
-
-### 1. [Full Name] — ICP Score: [XX]/100
-- **Title:** [Current Title]
-- **Company:** [Company Name]
-- **Location:** [Location]
-- **LinkedIn:** [Profile URL]
-- **Their Comment:** "[What they said on the post]"
-- **Why they're a fit:** [1-2 sentence assessment]
-- **Suggested DM:**
-
-> [Personalized DM text, max 500 chars]
-
----
-
-### 2. [Full Name] — ICP Score: [XX]/100
-[Same format]
-
----
-
-## 🟡 Warm Leads (50-79)
-
-### [Number]. [Full Name] — ICP Score: [XX]/100
-[Same format as above]
-
----
-
-## ❄️ Below Threshold (Skipped)
-
-| Name | Title | Company | Score | Reason |
-|------|-------|---------|-------|--------|
-| [Name] | [Title] | [Company] | [Score] | [Why they scored low] |
-
----
-
-## ⚠️ Competitors (Partnership Angle)
-
-| Name | Title | Company | Score | DM |
-|------|-------|---------|-------|----|
-| [Name] | [Title] | [Company] | [Score] | [Partnership-angle DM] |
-
----
-
-## Next Steps
-- "Want me to run Pluto on any of the hot leads for deep research?"
-- "Want me to push these leads to HeyReach?" (if HEYREACH_API_KEY configured)
-- "Want me to run Emilio to write email sequences for leads with email addresses?"
-
----
-
-## Methodology
-- **Scraper used:** benjarapi~linkedin-post-comments + dev_fusion~linkedin-profile-scraper
-- **Scoring criteria:** Based on config.md ICP and Qualification Criteria
-- **DM tone:** [Tone from config.md Brand Voice]
-- **Threshold applied:** [Score] minimum
+**After saving, auto-open in the browser:**
+```bash
+open outputs/artemis/[YYYY-MM-DD-HHMMSS]-[post-description].html
 ```
+
+**HTML structure:**
+1. **Header** — date, post URL, company name, total scraped, total above threshold
+2. **Summary bar** — hot / warm / cold / competitor counts as colored stat cards
+3. **Hot Leads section (80-100)** — full cards with: name (linked to LinkedIn), title, company, location, ICP score badge, comment text (quoted), why they fit, DM text (copyable box)
+4. **Warm Leads section (50-79)** — same card format
+5. **Below Threshold table** — name, title, company, score, reason (compact)
+6. **Competitors table** — name, title, company, partnership-angle DM
+
+**Styling (Agent OS dark theme):**
+- Background: `#0a0a0a`, card: `#111111`, border: `1px solid #222`
+- Score badges: green `#16a34a` (80+), yellow `#ca8a04` (50-79), gray `#52525b` (<50)
+- Comment text: amber `#fbbf24` highlighted block
+- DM box: dark `#1a1a1a`, monospace font, easy to select and copy
+- LinkedIn links: purple `#7c3aed`
+- Font: system-ui
 
 ### HeyReach Push (Optional)
 

@@ -170,8 +170,12 @@ Save to:
 - `outputs/iris/[YYYY-MM-DD-HHMMSS]-content-ideas.html` — full report with styling
 - `outputs/iris/[YYYY-MM-DD-HHMMSS]-content-ideas.md` — plain text for easy copy-paste
 
-After saving, tell the user:
-> "Done. Open `outputs/iris/[filename].html` to see your news digest and content ideas."
+After saving, auto-open the HTML file in the browser:
+```bash
+open outputs/iris/[YYYY-MM-DD-HHMMSS]-content-ideas.html
+```
+
+Then tell the user: "Done. [X] content ideas generated from [Y] sources. Report opened in your browser."
 
 ---
 

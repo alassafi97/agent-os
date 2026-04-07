@@ -347,8 +347,12 @@ mkdir -p outputs/metis
 
 Save to: `outputs/metis/[YYYY-MM-DD-HHMMSS]-[topic-slug].html`
 
-After saving, tell the user:
-"Research complete. Open `outputs/metis/[filename].html` in your browser to view the full report and diagram."
+After saving, auto-open the HTML file in the browser:
+```bash
+open outputs/metis/[YYYY-MM-DD-HHMMSS]-[topic-slug].html
+```
+
+Then tell the user: "Research complete. Report opened in your browser."
 
 Also save a plain markdown version for easy copying:
 `outputs/metis/[YYYY-MM-DD-HHMMSS]-[topic-slug].md` — report text only, no HTML

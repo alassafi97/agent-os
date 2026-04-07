@@ -204,10 +204,24 @@ Based on the pattern analysis, generate 10 original hooks tailored to the user's
 
 ### Output Format
 
-Save TWO files:
+Save TWO files, then auto-open the HTML report:
+```bash
+open outputs/picasso/[YYYY-MM-DD-HHMMSS]-reel-analysis.html
+```
 
 #### File 1: Report
-Save to `outputs/picasso/[YYYY-MM-DD-HHMMSS]-reel-analysis.md`
+Save to `outputs/picasso/[YYYY-MM-DD-HHMMSS]-reel-analysis.html` (self-contained HTML, not markdown)
+
+Use the Agent OS dark theme: background `#0a0a0a`, cards `#111111`, purple accent `#7c3aed`, amber `#fbbf24` for hook text highlights, engagement rate badges color-coded (green >5%, yellow 2-5%, gray <2%). Same aesthetic as Tron and Iris outputs.
+
+Structure:
+1. Header — date, accounts analyzed, total reels, total transcribed
+2. Top Performing Reels — cards with hook (amber), stats, engagement badge, link
+3. Engagement Comparison table per account
+4. Winning Patterns — hooks, topics, triggers, power words
+5. 10 Hook Ideas — numbered, ready to use
+6. Content Recommendations
+7. Your Best Performers section
 
 ```markdown
 # Instagram Reel Analysis Report
@@ -366,4 +380,4 @@ curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY
 - **Handle missing audio gracefully.** Some reels may not have `audioUrl` (e.g., photo carousels mislabeled). Skip transcription for those and note "No audio available."
 - **Handle Deepgram failures gracefully.** If transcription fails for a reel (expired URL, audio issue), note it and continue with other reels. Never let one failure stop the pipeline.
 - **Save both files** — report AND CSV. Always to `outputs/picasso/`.
-- **After saving, tell the user the headline numbers:** "Analyzed [X] reels across [Y] accounts. Top engagement rate: [Z]% from @[handle]. Found [N] hook patterns. 10 new hook ideas generated. Full report and CSV saved."
+- **After saving, auto-open the HTML file** (`open outputs/picasso/[filename].html`), then tell the user the headline numbers: "Analyzed [X] reels across [Y] accounts. Top engagement: [Z]% from @[handle]. Found [N] hook patterns. 10 new hook ideas generated. Report opened in your browser."
