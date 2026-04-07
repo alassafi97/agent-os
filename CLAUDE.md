@@ -122,7 +122,8 @@ If the task doesn't clearly match one agent, present 2-3 options and let the use
 
 | Path | What |
 |------|------|
-| `config.md` | User's business context — every agent reads this |
+| `config.md` | User's business context — every agent reads this (gitignored, created from `config.example.md` by `/setup`) |
+| `config.example.md` | Blank config template — tracked in git, copied to `config.md` on first run |
 | `outreach.md` | Outreach voice, angles, social proof, banned phrases, example sequences — Campaign, Emilio, Leonardo read this before writing. Customize during `/setup` or edit directly. |
 | `.env` | API keys — never expose in chat |
 | `.env.example` | Template showing which keys are needed |
@@ -195,7 +196,7 @@ This prevents repeating mistakes across sessions. Verified behavior is trusted. 
 2. **Never ask for API keys in chat.** Read `.env`. If a key is missing, tell the user what to add.
 3. **Never display actual API key values.** When reporting key status, only say "present" or "missing." Use `$VARIABLE_NAME` in any shown commands. Never include key values in saved output files.
 4. **Always read `config.md` before running an agent.** This is the user's business DNA.
-5. **Detect first-run state.** Read `config.md` — if the Company Name field is blank (empty after the colon), the user hasn't configured yet. Stop and prompt them to run `/setup`.
+5. **Detect first-run state.** Check if `config.md` exists. If not, it means the user just cloned the repo — copy it from the template (`cp config.example.md config.md`) and prompt them to run `/setup`. If it exists, read it — if the Company Name field is blank (empty after the colon), the user hasn't configured yet. Stop and prompt them to run `/setup`.
    Also check `outreach.md` — if the Social Proof section still references "Altari" or default examples, suggest: "Your outreach config has example data. Edit `outreach.md` or run `/setup` to customize it."
 6. **Save all outputs** to `outputs/[agent-name]/` with timestamps. Create the output subdirectory if it doesn't exist (`mkdir -p outputs/[agent-name]`).
 7. **Don't improvise agent behavior.** The .md file is the source of truth.

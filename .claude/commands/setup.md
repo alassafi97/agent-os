@@ -19,9 +19,14 @@ Display this banner first:
                     ⚡ Setup Wizard
 ```
 
-Then check if `.env` exists and whether `EXA_API_KEY` is set. 
+Then check if `config.md` and `.env` exist.
 
-**If no .env exists**, create it first:
+**If no `config.md` exists**, create it from the template first:
+```bash
+cp config.example.md config.md
+```
+
+**If no `.env` exists**, create it from the template:
 ```bash
 cp .env.example .env
 ```

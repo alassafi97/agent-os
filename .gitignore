@@ -2,6 +2,8 @@
 .env
 
 # User-specific config (filled in by /setup — not committed)
+# config.example.md is the blank template tracked in git
+config.md
 outreach.md
 
 # Agent outputs (user-specific)
