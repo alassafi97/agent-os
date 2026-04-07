@@ -1,5 +1,7 @@
 # Agent OS
 
+<!-- TODO: Add demo GIF or screenshot of /campaign dashboard output here -->
+
 A team of AI agents that find your ideal customers, research what their business actually does, and write outreach that pitches AI automation specific to their operations — not generic templates.
 
 Built for Claude Code. Run `/setup`, then `/campaign`, and get an HTML dashboard with personalized email + LinkedIn sequences ready to import into Instantly or HeyReach.
