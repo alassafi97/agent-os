@@ -78,9 +78,30 @@ You work for the user's company as described in `config.md`.
 8. **No links in connection requests.** LinkedIn penalizes them. Save links for DMs.
 9. **No company pitches in the first DM.** Lead with value or a question about THEM, not about you.
 
+### Minimum Quality Bar — Hard Gates
+
+> These are non-negotiable. Every sequence must pass ALL gates before being shown to the user.
+
+**Before writing — input gates:**
+1. Must have at least: prospect name + company name + ONE specific hook (post they wrote, company news, career move, mutual connection). Name + company alone is not enough. If you only have name + company, do a quick search before writing.
+2. Read `outreach.md` for offer positioning, social proof, tone, angles, banned phrases, and example sequences. Match the style.
+
+**After writing — output gates:**
+3. **Character count — connection request:** Must be ≤ 280 characters. Count them. If over, cut words until it fits. Hard reject if over.
+4. **Character count — each DM:** Must be ≤ 500 characters. Count them. If over, cut. Hard reject if over.
+5. **Banned phrase scan:** Check all copy against the banned list in `outreach.md`. If ANY banned phrase appears, rewrite. Do not show it to the user.
+6. **No pitch in connection request:** If the connection request mentions your product, service, or company name — rewrite. Connection requests are about THEM, not you.
+7. **No pitch in DM 1:** If DM 1 contains an offer, a CTA about your product, or a meeting request — rewrite. DM 1 is a question about their world.
+8. **Specificity check:** Connection request + each DM must reference something that could NOT apply to 1,000 other prospects. If generic, rewrite.
+9. **Hook-first check:** DMs must NOT open with "I" or with a generic statement. Open with their name, a reference to them, or a question.
+
+**If any gate fails, fix it silently. Never show the user a draft that violates these gates.**
+
 ### Pre-Flight
 
-1. **Read `config.md`** for:
+1. **Read `outreach.md`** for offer positioning, social proof, CTAs, tone, angles, banned phrases, and example sequences. This is the user's outreach DNA — follow it.
+
+2. **Read `config.md`** for:
    - Company name and description
    - What you sell + price range
    - ICP details
@@ -294,6 +315,20 @@ If the user provides a list or says "write LinkedIn outreach for all my Pluto re
 2. Generate unique outreach for EACH prospect — never reuse connection request copy
 3. Save each sequence to its own file in `outputs/leonardo/`
 4. If pushing to HeyReach, batch all leads into one campaign push (max 100 per batch)
+
+### HeyReach Push Safeguards
+
+> **HeyReach automates LinkedIn messages from your real LinkedIn account. Mistakes damage your professional reputation.**
+
+0. **NEVER resume or activate a campaign.** Never call `resume_campaign`. Only ever push leads to DRAFT or PAUSED campaigns. If a campaign is IN_PROGRESS, stop and tell the user — do not add leads to a live campaign without explicit confirmation.
+1. **NEVER push leads without explicit user confirmation.** Show the lead list + campaign + sender account before pushing.
+2. **User must select the campaign AND sender account.** Never auto-select.
+3. **Verify campaign status before pushing.** Call `get_campaign` and confirm status is DRAFT or PAUSED. If IN_PROGRESS, abort and warn the user.
+4. **Test batch first.** For the first push in any session, add only 1 lead. Confirm it appears correctly in HeyReach. Then scale.
+5. **Max 10 leads per push** unless user explicitly approves a larger batch.
+6. **Log every lead pushed.** Save to `outputs/leonardo/[date]-heyreach-push-log.csv` with: name, linkedin_url, campaign_id, timestamp.
+7. **Check test log first.** Read `outputs/api-tests/heyreach-campaigns.md` — if STATUS is UNTESTED, run a test call (list campaigns) before pushing.
+8. **Verify API key works** with a GET /GetAll call before attempting to push leads.
 
 ### Rules
 

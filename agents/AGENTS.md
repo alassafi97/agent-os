@@ -1,10 +1,18 @@
 # Agent OS — Agent Catalog
 
-> Don't know which agent to use? Start here. Describe what you need and follow the tree.
+> **Most users should start with `/campaign`** — it chains lead finding, research, business analysis, and outreach into a single pipeline. Use individual agents below when you need just one piece.
 
 ---
 
-## What do you need?
+## The Full Pipeline: `/campaign`
+
+Finds leads → researches each company's operations → writes outreach that pitches AI specific to their business → exports HTML dashboard + CSVs for Instantly/HeyReach. This is the flagship feature.
+
+---
+
+## Individual Agents
+
+### What do you need?
 
 ### "I need to research a prospect, company, or competitor"
 
@@ -35,8 +43,10 @@
 |-------|----------|
 | **Emilio** | Writing cold email sequences that get replies |
 | **Leonardo** | LinkedIn outreach — connection requests, DMs, follow-up sequences |
+| **Eddie** | Post-discovery-call prototype builder — turns call notes into a visual demo to send before the follow-up |
 
-**Typical flow:** Pluto (research) → Emilio or Leonardo (outreach)
+**Typical flow:** Pluto (research) → Emilio or Leonardo (outreach)  
+**Post-call flow:** Eddie → build prototype → send before follow-up → close on second call
 
 ---
 
@@ -44,7 +54,7 @@
 
 | Agent | Best For |
 |-------|----------|
-| **Cicero** | Long-form content — blog posts, articles, thought leadership |
+| **Cicero** | Multi-platform content engine — one idea → research → LinkedIn, X Thread, Newsletter, YouTube (long + Shorts), Reels, TikTok, AI image prompt |
 | **Harry** | Social media — LinkedIn posts, Instagram captions, TikTok scripts |
 | **Iris** | Email marketing — newsletters, drip campaigns, nurture sequences |
 | **Picasso** | Instagram reel analyzer — scrapes competitor + your reels, transcribes hooks, finds winning patterns, generates content ideas |
@@ -81,23 +91,24 @@ Here's how the agents work together for a full go-to-market motion:
 
 ## Full Agent Reference
 
-| # | Agent | Category | What It Does | Required Keys |
-|---|-------|----------|-------------|---------------|
-| 1 | Pluto | Research | Prospect (person) research & intelligence | APIFY, EXA, FIRECRAWL |
-| 2 | Atlas | Research | Company research & fit scoring | EXA, FIRECRAWL, APIFY |
-| 3 | Themis | Research | Competitor research & analysis | EXA, FIRECRAWL |
-| 4 | Felix | Lead Gen | Lead finder — companies + people (tiered methods) | APOLLO, APIFY, EXA, HUNTER |
-| 5 | Artemis | Lead Gen | LinkedIn post comment hunter + ICP scorer | APIFY |
-| 6 | Emilio | Outreach | Cold email sequences | INSTANTLY |
-| 7 | Leonardo | Outreach | LinkedIn DM sequences | HEYREACH |
-| 9 | Cicero | Marketing | Long-form content & thought leadership | — |
-| 10 | Harry | Marketing | Social media content | — |
-| 11 | Iris | Marketing | Email marketing campaigns | — |
-| 12 | Picasso | Marketing | Instagram reel analyzer + hook extractor | APIFY, DEEPGRAM |
-| 13 | Tron | Marketing | Ad copy & paid media | — |
-| 14 | Cosmo (Brand) | Marketing | Brand strategy & messaging | — |
-| 15 | Cosmo (Image) | Marketing | Brand image & visual identity | — |
-| 16 | Metis | Utils | General research & analysis | — |
+| # | Agent | Category | What It Does | Required Keys | Status |
+|---|-------|----------|-------------|---------------|--------|
+| 1 | Felix | Lead Gen | Find companies + people with verified emails | APOLLO, EXA | Ready |
+| 2 | Pluto | Research | Deep prospect research & personalization hooks | EXA, FIRECRAWL | Ready |
+| 3 | Atlas | Research | Company research & qualification scoring | EXA, FIRECRAWL | Ready |
+| 4 | Themis | Research | Competitor teardown — pricing, positioning, weaknesses | EXA, FIRECRAWL | Ready |
+| 5 | Emilio | Outreach | 3-step cold email sequences (reads outreach.md) | — (INSTANTLY optional) | Ready |
+| 6 | Leonardo | Outreach | LinkedIn connection + DM sequences (reads outreach.md) | — (HEYREACH optional) | Ready |
+| 7 | Eddie | Sales | Post-discovery prototype builder — call notes → visual demo → send message | — (FIREFLIES optional) | Ready |
+| 8 | Harry | Marketing | Viral hook generator — 15-20 hooks per platform | EXA (optional) | Ready |
+| 9 | Artemis | Lead Gen | LinkedIn post comment hunter + ICP scorer + DMs | APIFY | Ready |
+| 10 | Picasso | Marketing | Instagram reel analyzer + spoken hook extractor | APIFY, DEEPGRAM | Ready |
+| 11 | Cicero | Marketing | One idea → research → 7 platform-optimized formats (LinkedIn, X, Newsletter, YouTube, Reels, TikTok, Shorts) | EXA (optional) | Ready |
+| 12 | Iris | Marketing | Daily news research → content ideas (topics → articles → hooks → ready to post) | EXA, FIRECRAWL (optional) | Ready |
+| 13 | Tron | Marketing | Ad copy & paid media | — | Coming Soon |
+| 14 | Cosmo (Brand) | Marketing | Brand strategy & messaging | — | Coming Soon |
+| 15 | Cosmo (Image) | Marketing | Brand image & visual identity | — | Coming Soon |
+| 16 | Metis | Utils | Research & analysis — any topic → structured report + SVG diagram as HTML | EXA (optional) | Ready |
 
-> Agents marked with "—" use Claude's built-in capabilities and don't require external API keys.
-> Required keys and descriptions will be updated as each agent is built.
+> **Ready** = built, tested, and guardrailed. **Coming Soon** = spec written, not yet complete.
+> Agents with "—" in Required Keys use Claude's built-in capabilities — no external APIs needed.

@@ -322,3 +322,15 @@ Based on the analysis, these have the highest viral potential:
 - **No AI slop in hooks.** Never use: "leverage", "streamline", "game-changer", "revolutionary", "in today's fast-paced world", "unlock your potential." Hooks should sound like a real person, not a marketing robot.
 - **Save the output** — always write to `outputs/harry/`. Never just print it in chat.
 - **After saving, show the user the Top 5 hooks** and ask: "Want me to adjust the tone, add more hooks for a specific platform, or turn any of these into full posts?"
+
+### API Cost Controls
+
+> **These rules are mandatory. See CLAUDE.md "API Cost Safety" for full details.**
+
+**APIs used by Harry:** Exa (semantic search, optional), Firecrawl (website scraping, optional).
+
+**Mandatory safeguards:**
+1. **Cap Firecrawl to 1-2 pages.** Harry only needs homepage + maybe services page. Never scrape more than 2 pages.
+2. **Cap Exa to `numResults: 10` per search.** 2-3 searches max.
+3. **Never scrape the same URL twice.**
+4. **Harry works fine without APIs.** If keys are missing, generate hooks from config.md alone — don't push user to add keys.

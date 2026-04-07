@@ -89,7 +89,7 @@ You work for the user's company as described in `config.md`.
 Scrape all commenters from the LinkedIn post:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/run-sync-get-dataset-items?token=$APIFY_API_KEY" \
+curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -110,7 +110,7 @@ Tell the user: "Found [X] commenters. Enriching profiles now..."
 For each commenter, scrape their LinkedIn profile for detailed data:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY" \
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -308,6 +308,30 @@ curl -s "https://api.heyreach.io/api/v1/campaign/AddLeadsToCampaign" \
 ```
 
 Only push leads above the ICP threshold. Confirm with user before pushing.
+
+### API Cost Controls
+
+> **These rules are mandatory. See CLAUDE.md "API Cost Safety" for full details.**
+
+**Apify scrapers used by Artemis:**
+- `harvestapi~linkedin-post-comments` — scrapes post comments. Lower cost, typically small datasets.
+- `dev_fusion~linkedin-profile-scraper` — scrapes profiles for enrichment. Cost scales with batch size.
+
+**Mandatory safeguards:**
+1. **Always set `maxTotalChargeUsd=1.00`** in the Apify run URL for EVERY scraper call.
+2. **Cap comment scraping to 100 max** (`maxComments: 100`). Large posts can have 500+ comments — never scrape all.
+3. **Batch profile enrichment in groups of 10-20.** Don't scrape 100 profiles in a single call.
+4. **Abort all Apify runs after fetching data.** POST to `/actor-runs/{id}/abort`.
+5. **Tell the user estimated cost before starting:** "This will scrape up to 100 comments + enrich ~X profiles. Estimated Apify cost: $X-Y."
+
+**Updated curl patterns with cost caps:**
+```bash
+# Comments (with cost cap)
+curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+
+# Profile enrichment (with cost cap)
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+```
 
 ### Rules
 

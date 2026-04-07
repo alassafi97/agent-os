@@ -9,11 +9,11 @@ Atlas builds deep intelligence reports on target companies. Give it a company na
 
 ## Required API Keys
 
-| Key | Where to Get It | .env Variable |
-|-----|----------------|---------------|
-| Exa | https://dashboard.exa.ai/api-keys | EXA_API_KEY |
-| Firecrawl | https://firecrawl.dev/app/api-keys | FIRECRAWL_API_KEY |
-| Apify | https://console.apify.com/account/integrations | APIFY_API_KEY |
+| Key | Where to Get It | .env Variable | Required? |
+|-----|----------------|---------------|-----------|
+| Exa | https://dashboard.exa.ai/api-keys | EXA_API_KEY | Yes |
+| Firecrawl | https://firecrawl.dev/app/api-keys | FIRECRAWL_API_KEY | Yes |
+| Apify | https://console.apify.com/account/integrations | APIFY_API_KEY | Optional — adds LinkedIn page/posts scraping |
 
 ## Configuration
 
@@ -90,7 +90,7 @@ Execute these steps methodically. Company research goes wide — you want the fu
 Find and scrape the company's LinkedIn page using Apify:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY" \
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"startUrls": [{"url": "COMPANY_LINKEDIN_URL_HERE"}]}'
@@ -104,7 +104,7 @@ Extract: company size, industry, description, specialties, headquarters, founded
 Scrape recent company posts to understand what they're talking about publicly:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-posts-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY" \
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-posts-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"startUrls": [{"url": "COMPANY_LINKEDIN_URL_HERE"}]}'
@@ -328,12 +328,34 @@ Three specific ways your company can provide value:
 **Total sources consulted:** [Count]
 ```
 
+### API Cost Controls
+
+> **These rules are mandatory. See CLAUDE.md "API Cost Safety" for full details.**
+
+**APIs used by Atlas:** Apify (LinkedIn scrapers), Exa (semantic search), Firecrawl (website scraping).
+
+**Mandatory safeguards:**
+1. **Always set `maxTotalChargeUsd=1.00`** in the Apify run URL for EVERY scraper call.
+2. **Abort all Apify runs after fetching data.** POST to `/actor-runs/{id}/abort`.
+3. **Cap Firecrawl to 4-6 pages per company.** Never scrape more than 6 pages.
+4. **Cap Exa to `numResults: 10` per search.** 3-4 searches max per company.
+5. **Never scrape the same URL twice.**
+6. **Tell the user estimated cost before starting:** "Researching [Company] will use ~2 Apify scrapes, 3-4 Exa searches, 4-6 Firecrawl pages. Estimated cost: $0.50-$1.50."
+
+**Updated curl patterns with cost caps:**
+```bash
+# Apify LinkedIn scrapers (with cost cap)
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-posts-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+```
+
 ### Rules
 
 - **Company first.** This is company research, not person research. People are identified as decision-makers but not deeply profiled (that's Pluto's job).
 - **Always read config.md before starting.** Never assume the user's business details.
 - **Never ask the user for API keys in chat.** Read from .env.
-- **Minimum research effort:** 1 LinkedIn company scrape + 3 Exa searches + 4 Firecrawl pages. More is better.
+- **Minimum research effort:** 1 LinkedIn company scrape + 3 Exa searches + 4 Firecrawl pages. More is better, up to the caps above.
 - **Cross-verify data.** Employee count from LinkedIn vs website vs Exa may differ — note discrepancies.
 - **Be current.** Timestamp everything. Flag stale data.
 - **No assumptions without evidence.** Revenue estimates should cite reasoning. If you're guessing, say so.

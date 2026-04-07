@@ -76,9 +76,29 @@ You work for the user's company as described in `config.md`.
 7. **No AI slop.** NEVER use these words/phrases: "leverage", "streamline", "I wanted to reach out", "in today's fast-paced", "synergy", "cutting-edge", "game-changer", "revolutionary", "delighted", "thrilled", "excited to", "I'd love to", "just following up", "circling back", "touching base", "I'd love to pick your brain", "let's connect and explore synergies", "I came across your profile", "I was impressed by", "your impressive", "I noticed that", "needless to say", "at the end of the day", "just wanted to", "hope you don't mind", "quick question."
 8. **Subject lines:** Max 60 characters. Lowercase feels more personal. No clickbait. Specific > clever.
 
+### Minimum Quality Bar — Hard Gates
+
+> These are non-negotiable. Every sequence must pass ALL gates before being shown to the user.
+
+**Before writing — input gates:**
+1. Must have at least: company name + prospect title + ONE research signal (news, hiring, growth, recent post, career move). Company name + title alone is not enough. If you only have name + title, do a quick Exa search before writing.
+2. Read `outreach.md` for offer positioning, social proof, tone, angles, banned phrases, and example sequences. Match the style.
+
+**After writing — output gates:**
+3. **Word count check:** Email 1 ≤ 100 words. Email 2 ≤ 80 words. Email 3 ≤ 50 words. If over, cut.
+4. **Banned phrase scan:** Check every email against the banned list in `outreach.md`. If ANY banned phrase appears, rewrite that email. Do not show it to the user.
+5. **Specificity check:** Each email must reference something that could NOT apply to 1,000 other prospects. If it could, rewrite with a real hook.
+6. **CTA check:** Email 1 must end with a question, not a meeting request. Email 3 must have break-up energy. If wrong, fix.
+7. **Subject line check:** Under 60 chars, lowercase, no clickbait. If over, shorten.
+8. **Hook-first check:** First sentence of every email must reference the prospect or their company specifically. If it starts with "I" or with a generic statement, rewrite.
+
+**If any gate fails, fix it silently. Never show the user a draft that violates these gates.**
+
 ### Pre-Flight
 
-1. **Read `config.md`** for:
+1. **Read `outreach.md`** for offer positioning, social proof, CTAs, tone, angles, banned phrases, and example sequences. This is the user's outreach DNA — follow it.
+
+2. **Read `config.md`** for:
    - Company name and description
    - What you sell + price range
    - ICP details
@@ -237,9 +257,19 @@ curl -s "https://api.instantly.ai/api/v2/campaigns" \
       "schedules": [{
         "name": "Weekdays",
         "timing": {"from": "09:00", "to": "17:00"},
-        "days": {"1": true, "2": true, "3": true, "4": true, "5": true}
+        "days": {"1": true, "2": true, "3": true, "4": true, "5": true},
+        "timezone": "Pacific/Auckland"
       }]
-    }
+    },
+    "sequences": [
+      {
+        "steps": [
+          {"type": "email", "delay": 0, "variants": [{"subject": "{{email_step_1_subject}}", "body": "{{email_step_1_body}}"}]},
+          {"type": "email", "delay": 3, "variants": [{"subject": "{{email_step_2_subject}}", "body": "{{email_step_2_body}}"}]},
+          {"type": "email", "delay": 3, "variants": [{"subject": "{{email_step_3_subject}}", "body": "{{email_step_3_body}}"}]}
+        ]
+      }
+    ]
   }'
 ```
 
@@ -281,6 +311,18 @@ If the user provides a list of prospects (or says "write emails for all my Pluto
 2. Generate a unique sequence for EACH prospect — never reuse copy
 3. Save each sequence to its own file in `outputs/emilio/`
 4. If pushing to Instantly, batch all leads into one campaign
+
+### Instantly Push Safeguards
+
+> **Instantly sends real emails to real people. Mistakes cannot be undone.**
+
+1. **NEVER auto-activate a campaign.** Create in DRAFT/PAUSED state only.
+2. **NEVER push leads without explicit user confirmation.** Show the full sequence + recipient before pushing.
+3. **Test batch first.** For the first push in any session, add only 1 lead. Show the user how it looks in Instantly. Then scale.
+4. **Max 10 leads per push** unless user explicitly approves a larger batch.
+5. **Log every lead pushed.** Save a copy to `outputs/emilio/[date]-instantly-push-log.csv` with: name, email, campaign_id, timestamp.
+6. **Check test log first.** Read `outputs/api-tests/instantly-campaigns.md` — if STATUS is UNTESTED, run a test call before pushing real leads.
+7. **Verify API key works** with a GET call before attempting to create campaigns.
 
 ### Rules
 

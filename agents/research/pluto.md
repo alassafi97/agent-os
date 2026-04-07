@@ -9,11 +9,11 @@ Pluto is a world-class research agent that builds deep, actionable intelligence 
 
 ## Required API Keys
 
-| Key | Where to Get It | .env Variable |
-|-----|----------------|---------------|
-| Apify | https://console.apify.com/account/integrations | APIFY_API_KEY |
-| Exa | https://dashboard.exa.ai/api-keys | EXA_API_KEY |
-| Firecrawl | https://firecrawl.dev/app/api-keys | FIRECRAWL_API_KEY |
+| Key | Where to Get It | .env Variable | Required? |
+|-----|----------------|---------------|-----------|
+| Exa | https://dashboard.exa.ai/api-keys | EXA_API_KEY | Yes |
+| Firecrawl | https://firecrawl.dev/app/api-keys | FIRECRAWL_API_KEY | Yes |
+| Apify | https://console.apify.com/account/integrations | APIFY_API_KEY | Optional — adds LinkedIn profile/activity scraping |
 
 ## Configuration
 
@@ -87,7 +87,7 @@ Execute these steps methodically. Be thorough — use every tool available.
 If you have a LinkedIn URL, scrape the prospect's profile using Apify:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY" \
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"startUrls": [{"url": "LINKEDIN_URL_HERE"}]}'
@@ -101,7 +101,7 @@ Extract: full name, title, company, location, summary, experience history, educa
 Scrape the prospect's recent LinkedIn posts to understand what they talk about, care about, and engage with:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY" \
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"startUrls": [{"url": "LINKEDIN_URL_HERE"}], "scrapeActivities": true}'
@@ -113,7 +113,7 @@ Note: themes, tone, engagement patterns, recent topics, any pain points or goals
 Find and scrape the company's LinkedIn page:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY" \
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"startUrls": [{"url": "COMPANY_LINKEDIN_URL_HERE"}]}'
@@ -304,12 +304,34 @@ Three specific ways your company can provide value:
 **Total sources consulted:** [Count]
 ```
 
+### API Cost Controls
+
+> **These rules are mandatory. See CLAUDE.md "API Cost Safety" for full details.**
+
+**APIs used by Pluto:** Apify (LinkedIn profile + company scrapers), Exa (semantic search), Firecrawl (website scraping).
+
+**Mandatory safeguards:**
+1. **Always set `maxTotalChargeUsd=1.00`** in the Apify run URL for EVERY scraper call.
+2. **Abort all Apify runs after fetching data.** POST to `/actor-runs/{id}/abort`.
+3. **Cap Firecrawl to 3-5 pages per prospect.** Never scrape more than 5 pages.
+4. **Cap Exa to `numResults: 10` per search.** 3-4 searches max per prospect.
+5. **Never scrape the same URL twice.**
+6. **For batch research (multiple prospects):** Tell user estimated total cost before starting. Get approval for any batch over 5 prospects.
+
+**Updated curl patterns with cost caps:**
+```bash
+# Apify LinkedIn scrapers (with cost cap)
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-company-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+```
+
 ### Rules
 
 - **Person first, company second.** The prospect is the focus. Company is context.
 - **Always read config.md before starting.** Never assume company details.
 - **Never ask the user for API keys in chat.** Read from .env.
-- **Minimum research effort:** 1 LinkedIn profile scrape + 3 web searches + 3 website pages. More is better.
+- **Minimum research effort:** 1 LinkedIn profile scrape + 3 web searches + 3 website pages. More is better, up to the caps above.
 - **Cross-verify everything.** If two sources disagree, note it and rate confidence.
 - **Be current.** Note dates and freshness of information. Flag stale data.
 - **No assumptions without evidence.** Highlight plausible inferences separately from confirmed facts.

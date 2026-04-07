@@ -1,6 +1,9 @@
 # Secrets
 .env
 
+# User-specific config (filled in by /setup — not committed)
+outreach.md
+
 # Agent outputs (user-specific)
 outputs/
 

@@ -87,7 +87,7 @@ You work for the user's company as described in `config.md`.
 For each competitor handle, scrape their recent reels:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120" \
+curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -117,7 +117,7 @@ Calculate engagement rate for each reel: `(likes + comments) / views * 100`
 Same process for the user's own handle:
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120" \
+curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -302,6 +302,26 @@ account,reel_url,caption,hook,full_transcript,likes,comments,views,plays,engagem
 ```
 
 Include ALL scraped reels (not just top performers) so the user can import into Sheets/Airtable for their own analysis.
+
+### API Cost Controls
+
+> **These rules are mandatory. See CLAUDE.md "API Cost Safety" for full details.**
+
+**APIs used by Picasso:** Apify (Instagram reel scraper), Deepgram (audio transcription).
+
+**Mandatory safeguards:**
+1. **Always set `maxTotalChargeUsd=1.00`** in the Apify run URL for EVERY scraper call.
+2. **Cap reels per account to 10-15.** Set `resultsLimit: 10` (default). Never go above 15 per account.
+3. **Cap total accounts to 5 max** per run (user's + up to 4 competitors).
+4. **Only transcribe top 10-15 reels** by engagement rate. Never transcribe all scraped reels.
+5. **Deepgram has free tier ($200 credits)** but still track usage. Each transcription costs ~$0.01-0.05 depending on audio length.
+6. **Tell the user estimated cost before starting:** "Scraping X accounts × Y reels + transcribing top Z. Estimated cost: $X-Y Apify + ~$Z Deepgram."
+
+**Updated curl patterns with cost caps:**
+```bash
+# Apify Instagram scraper (with cost cap)
+curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120&maxTotalChargeUsd=1.00" ...
+```
 
 ### Rules
 

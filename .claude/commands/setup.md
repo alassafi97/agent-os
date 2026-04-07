@@ -162,6 +162,30 @@ After voice is captured, ask ONLY about things you genuinely couldn't infer:
 
 Save everything to `config.md` after each round. Use the user's exact words — don't corporate-ify their voice.
 
+### Step 2.5: Outreach Configuration (outreach.md)
+
+After config.md is populated, set up the outreach voice. This controls how every email and LinkedIn message sounds.
+
+Read `outreach.md`. If it still has the default example data (check if Social Proof mentions "Altari" or "Ahmed"), walk the user through customizing it:
+
+"Your business profile is set. Now let's configure how your outreach sounds — this controls every email and LinkedIn message the campaign writes."
+
+**Offer positioning** — propose a one-liner based on what you learned from config.md:
+"Based on your profile, here's how I'd position your offer in one sentence: '[proposed sentence]'. Want to tweak it?"
+
+**Social proof** — ask for specific numbers:
+"What are your strongest proof points? Things like: clients served, hours saved, revenue generated, ROI achieved, notable client names. Drop whatever you have — I'll format it."
+
+**Example sequences** — ask for real examples:
+"Do you have any cold emails or LinkedIn messages that have worked well? Paste one in and I'll match the style. If not, I'll use a direct, peer-to-peer tone."
+
+**Industry notes** — propose based on their ICP:
+"Based on your ICP, you're targeting [industries]. Any specific pain points you know work well for each? For example, 'staffing firms → reps spend more time sourcing than selling.'"
+
+Save updates to `outreach.md`. If they skip any section, keep the defaults.
+
+If user says "skip" for the whole step, leave outreach.md as-is and move on.
+
 ### Step 3: API Keys (.env)
 Check if `.env` exists. If not, copy from `.env.example`:
 ```bash
@@ -188,8 +212,9 @@ Present this table:
 | **Hunter** | Finds email addresses from company domains — backup when Apollo misses | Free 50 searches/mo | hunter.io |
 | **Deepgram** | Transcribes audio — used to extract spoken hooks from Instagram reels | Free $200 credits, then $4/hr | console.deepgram.com |
 | **Fireflies** | Call notetaker — pull meeting transcripts for research and voice learning | Free plan, then $19/mo | fireflies.ai |
+| **OpenAI** | DALL-E 3 image generation — Cicero auto-generates images for your content | Pay-per-image (~$0.04/image) | platform.openai.com/api-keys |
 
-**My recommendation to start:** Exa (free) + Apify (free) gets you research + LinkedIn scraping. That unlocks Pluto, Atlas, Themis, Felix, and Artemis. Add more as you need them.
+**My recommendation to start:** Exa (free) + Apollo ($49/mo) gets you company discovery + verified emails — enough for a full `/campaign` run. Add Firecrawl (free 500 pages) for deeper research. Everything else is optional.
 
 Tell me which ones you have and add them to your `.env` file, or say 'skip' to set up keys later."
 
@@ -205,9 +230,15 @@ Read `.env` and check which keys are present (non-empty). Report:
 - Which agents need additional keys
 
 ### Step 5: Done
-"You're all set! Here's what you can do now:
-- Say 'list agents' to see all available agents
-- Say 'run [agent name]' to run a specific agent
-- Or just tell me what you need and I'll find the right agent.
+"You're all set! Here's what to do next:
 
-Your business profile is saved in config.md and your keys are in .env. You can update either anytime."
+**Run your first campaign:** Type `/campaign` — it will find leads matching your ICP, research each company's operations, and write outreach that pitches AI automation specific to each prospect's business. You get an HTML dashboard + CSVs ready for Instantly/HeyReach.
+
+**Or run individual agents:**
+- `/felix` — find leads
+- `/pluto` — research a specific prospect
+- `/atlas` — research a company
+- `/emilio` — write a cold email sequence
+- Type 'list agents' to see everything available.
+
+Your business profile is saved in config.md, outreach voice in outreach.md, and keys in .env. Edit any of these anytime."

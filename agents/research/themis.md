@@ -351,13 +351,25 @@ Use this exact structure:
 **Total sources consulted:** [Count]
 ```
 
+### API Cost Controls
+
+> **These rules are mandatory. See CLAUDE.md "API Cost Safety" for full details.**
+
+**APIs used by Themis:** Exa (semantic search), Firecrawl (website scraping).
+
+**Mandatory safeguards:**
+1. **Cap Firecrawl to 5-7 pages per competitor.** Never scrape more than 7 pages.
+2. **Cap Exa to `numResults: 10` per search.** 4-6 searches max per competitor.
+3. **Never scrape the same URL twice.**
+4. **Tell the user estimated cost before starting:** "Analyzing [Competitor] will use 5-7 Firecrawl pages + 4-6 Exa searches. Estimated cost: $0.50-$1.00."
+
 ### Rules
 
 - **Frame everything as "us vs them."** Every finding should be actionable — not just "they do X" but "they do X, which means we should Y."
 - **Be honest about their strengths.** The user needs accurate intel, not cheerleading. If the competitor is better at something, say so and explain how to handle it.
 - **Always read config.md before starting.** You need to know the user's business to make the comparison meaningful.
 - **Never ask the user for API keys in chat.** Read from .env.
-- **Minimum research effort:** 5 Firecrawl pages + 4 Exa searches. More is better — competitor research benefits from depth.
+- **Minimum research effort:** 5 Firecrawl pages + 4 Exa searches. Max: 7 Firecrawl + 6 Exa per competitor.
 - **Quote their exact messaging.** Don't paraphrase taglines — quote them so the user sees the contrast.
 - **Surface review sentiment.** G2, Capterra, Reddit, Trustpilot — what real users say is gold.
 - **Provide ready-to-use objection handling.** The user should be able to walk into a sales call after reading this report.

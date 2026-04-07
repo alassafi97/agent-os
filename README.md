@@ -1,114 +1,119 @@
 # Agent OS
 
-AI agent framework for Claude Code. Pre-built agents that handle research, lead generation, outreach, content creation, and more.
+A team of AI agents that find your ideal customers, research what their business actually does, and write outreach that pitches AI automation specific to their operations — not generic templates.
 
-Built by Ahmed Alassafi (@alassafi.ai) for the Agent OS community.
-
----
-
-## Quick Start
-
-### 1. Open in Claude Code
-Unzip this folder and open it in Claude Code (CLI or VS Code extension).
-
-### 2. Configure Your Business
-Run `/setup` in Claude Code — it walks you through filling in your company details, ICP, qualification criteria, and brand voice. Or manually edit `config.md`. See `config.example.md` for a filled-out example.
-
-### 3. Add API Keys
-Copy the example env file and add your keys:
-```
-cp .env.example .env
-```
-Open `.env` and fill in the keys for the agents you want to use. Each agent's file tells you exactly which keys it needs. You only need keys for agents you plan to use.
-
-### 4. Run an Agent
-Tell Claude what you need:
-- "Find me SaaS companies in Sydney with 20-50 employees"
-- "Research this prospect: [Name] at [Company]"
-- "Write me a cold email sequence for [prospect]"
-- "Scrape commenters from this LinkedIn post: [URL]"
-- "Run Felix" (if you know the agent name)
-
-Claude will find the right agent, run it, and save the output to `outputs/`.
+Built for Claude Code. Run `/setup`, then `/campaign`, and get an HTML dashboard with personalized email + LinkedIn sequences ready to import into Instantly or HeyReach.
 
 ---
 
-## What's Inside
+## What You Get in 3 Steps
 
-```
-agents/
-├── research/    — Prospect, company, and competitor research
-├── lead-gen/    — Lead finding and social media scraping
-├── outreach/    — Cold email and LinkedIn outreach
-├── marketing/   — Content, social media, ads, brand strategy
-└── utils/       — General research and analysis
-```
+### 1. Run `/setup` (2 minutes)
+Answer a few questions about your business. Agent OS auto-researches your website and proposes your business profile, ICP, outreach voice, and social proof. You tweak, it saves.
 
-Run `/list-agents` in Claude Code to see the full catalog with a decision tree.
+### 2. Run `/campaign` (tell it who to target)
+Agent OS finds companies matching your ICP, discovers decision-makers with verified emails, researches each company's operations, and figures out exactly what AI could automate in their business.
+
+### 3. Get Your Campaign Dashboard
+Open `campaign-table.html` in your browser — a dark-themed spreadsheet with every prospect, their business-specific email sequences, LinkedIn outreach, and CSV download buttons for Instantly/HeyReach.
+
+**Every email pitches AI for their specific business.** Not "we help companies automate." But "your recruiters are spending 3 hours per candidate on intake paperwork — an AI agent handles that in 90 seconds."
 
 ---
 
-## The GTM Workflow
+## What Makes This Different
+
+Most outreach tools generate generic templates with `{{first_name}}` and `{{company}}` mail merge.
+
+Agent OS researches what each company actually does — their operations, workflows, bottlenecks — then writes outreach that describes what AI would automate in THEIR business specifically.
+
+A staffing firm gets "candidate intake processing, compliance tracking, client reporting."
+A B2B ecommerce firm gets "product data enrichment, catalog migration, implementation scoping."
+A media company gets "editorial workflow routing, ad ops reporting, content repurposing."
+
+Same framework, different pitch for every prospect.
+
+---
+
+## The Pipeline
 
 ```
-1. FIND        Felix → Build targeted lead lists
-2. RESEARCH    Atlas + Pluto → Deep dive on companies and people
-3. QUALIFY     Pluto/Atlas scoring → Focus on highest-fit prospects
-4. OUTREACH    Emilio (email) or Leonardo (LinkedIn) → Personalized sequences
-5. CONTENT     Cicero + Harry → Thought leadership and social proof
-6. NURTURE     Iris → Email campaigns for longer sales cycles
+/campaign
+
+  1. FIND        → Apollo + Exa discover companies and people with verified emails
+  2. RESEARCH    → Exa + Firecrawl analyze each company's actual operations
+  3. ANALYZE     → AI identifies what could be automated in their specific business
+  4. WRITE       → Business-specific email + LinkedIn sequences (quality-gated)
+  5. DELIVER     → HTML dashboard + Instantly CSV + HeyReach CSV
 ```
 
 ---
 
 ## Agents
 
-### Built and Ready
+### Outbound Pipeline (used by `/campaign`)
 
-| Agent | Category | What It Does | Required Keys |
-|-------|----------|-------------|---------------|
-| Pluto | Research | Prospect (person) research & intelligence reports | APIFY, EXA, FIRECRAWL |
-| Atlas | Research | Company research & fit scoring | EXA, FIRECRAWL, APIFY |
-| Themis | Research | Competitor research & analysis | EXA, FIRECRAWL |
-| Felix | Lead Gen | Lead finder — companies + people (tiered methods) | APOLLO, APIFY, EXA, HUNTER |
-| Artemis | Lead Gen | LinkedIn post comment hunter + ICP scoring + DMs | APIFY |
-| Emilio | Outreach | Cold email sequences (optionally pushes to Instantly) | INSTANTLY |
-| Leonardo | Outreach | LinkedIn outreach — connection requests + DMs | HEYREACH |
+| Agent | What It Does | Required Keys |
+|-------|-------------|---------------|
+| Felix | Find companies + people with verified emails | APOLLO, EXA |
+| Pluto | Deep prospect (person) research | EXA, FIRECRAWL |
+| Atlas | Deep company research + qualification scoring | EXA, FIRECRAWL |
+| Emilio | 3-step cold email sequences | — (INSTANTLY optional) |
+| Leonardo | LinkedIn connection + DM sequences | — (HEYREACH optional) |
+| Eddie | Post-discovery-call prototype builder — turns call notes into a visual demo | — (FIREFLIES optional) |
 
-### Coming Soon
+### Research & Analysis
 
-| Agent | Category | What It Does |
-|-------|----------|-------------|
-| Cicero | Marketing | Long-form content & thought leadership |
-| Harry | Marketing | Social media content |
-| Iris | Marketing | Email marketing campaigns |
-| Picasso | Marketing | Visual content & design briefs |
-| Tron | Marketing | Ad copy & paid media |
-| Cosmo (Brand) | Marketing | Brand strategy & messaging |
-| Cosmo (Image) | Marketing | Brand image & visual identity |
-| Metis | Utils | General research & analysis |
+| Agent | What It Does | Required Keys |
+|-------|-------------|---------------|
+| Themis | Competitor teardown — pricing, positioning, weaknesses | EXA, FIRECRAWL |
+| Metis | Research & analysis on any topic → structured HTML report + SVG diagram | EXA (optional) |
 
----
+### Content & Marketing
 
-## API Keys
-
-You only need keys for agents you plan to use. The research stack (Exa + Firecrawl + Apify) powers the most agents.
-
-| Service | Used By | Free Tier? |
-|---------|---------|-----------|
-| Exa | Pluto, Atlas, Themis, Felix | 1K searches/mo free |
-| Firecrawl | Pluto, Atlas, Themis | 500 credits one-time |
-| Apify | Pluto, Atlas, Felix, Artemis | $5/mo free credits |
-| Apollo | Felix | No free tier |
-| Hunter | Felix | 50 searches/mo free |
-| Instantly | Emilio | No free tier |
-| HeyReach | Leonardo | No free tier |
+| Agent | What It Does | Required Keys |
+|-------|-------------|---------------|
+| Cicero | Multi-platform content engine — one idea → LinkedIn, X Thread, Newsletter, YouTube, Reels, TikTok | — |
+| Harry | Viral hook generator — 15–20 platform-specific hooks from your business context | EXA (optional) |
+| Iris | Content intelligence — daily news research → 10–15 content ideas tied to real articles | EXA, FIRECRAWL (optional) |
+| Picasso | Instagram reel analyzer — scrapes reels, extracts spoken hooks, finds winning patterns | APIFY, DEEPGRAM |
+| Artemis | LinkedIn post comment hunter — scrapes commenters, scores ICP fit, writes DMs | APIFY |
 
 ---
 
-## Need Help?
+## What You Need
 
-- Say "list agents" to see what's available
-- Say "help me with [task]" and Claude will route you to the right agent
-- Check each agent's .md file for detailed documentation
-- Run `/setup` to reconfigure your business profile or API keys
+**Minimum to run `/campaign`:**
+- Exa — free (1K searches/month) → [dashboard.exa.ai](https://dashboard.exa.ai/api-keys)
+- Apollo — from $49/mo (verified emails + LinkedIn URLs) → [app.apollo.io](https://app.apollo.io/#/settings/integrations/api)
+
+**Recommended addition:**
+- Firecrawl — free (500 pages) → [firecrawl.dev](https://firecrawl.dev/app/api-keys) — enables deep website research per prospect
+
+**Optional (for sending):**
+- Instantly — from $30/mo → auto-push email campaigns
+- HeyReach — from $79/mo → auto-push LinkedIn campaigns
+
+---
+
+## File Structure
+
+```
+config.md           ← your business profile (filled by /setup)
+outreach.md         ← your outreach voice, angles, social proof (filled by /setup)
+outreach.example.md ← template — copy to outreach.md if starting fresh
+.env                ← your API keys (never shared)
+agents/             ← all agent specs
+outputs/            ← all outputs, organized by agent/campaign
+outputs/api-tests/  ← verified API behavior logs
+```
+
+---
+
+## Getting Started
+
+1. Open this folder in Claude Code
+2. Type `/setup`
+3. Type `/campaign`
+
+That's it.
