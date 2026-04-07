@@ -84,16 +84,37 @@ You work for the user's company as described in `config.md`.
 
 #### Step 1: Scrape Competitor Reels
 
-For each competitor handle, scrape their recent reels:
+Use the **async pattern** — never the sync endpoint (it returns empty).
 
+For each competitor handle, launch a scrape run:
+
+**Launch the run:**
 ```bash
-curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120&maxTotalChargeUsd=1.00" \
+curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
     "username": ["COMPETITOR_HANDLE"],
     "resultsLimit": 10
   }'
+```
+
+Save the run ID from `data.id`.
+
+**Poll for completion (every 10 seconds, timeout 5 minutes):**
+```bash
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]?token=[APIFY_API_KEY]"
+```
+Wait for `status: "SUCCEEDED"`.
+
+**Fetch the dataset:**
+```bash
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]/dataset/items?token=[APIFY_API_KEY]&format=json"
+```
+
+**Abort immediately after fetching:**
+```bash
+curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY_API_KEY]"
 ```
 
 For each reel, extract:
@@ -114,10 +135,10 @@ Calculate engagement rate for each reel: `(likes + comments) / views * 100`
 
 #### Step 2: Scrape User's Reels
 
-Same process for the user's own handle:
+Same async pattern for the user's own handle. Launch → poll → fetch → abort.
 
 ```bash
-curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120&maxTotalChargeUsd=1.00" \
+curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -317,10 +338,19 @@ Include ALL scraped reels (not just top performers) so the user can import into 
 5. **Deepgram has free tier ($200 credits)** but still track usage. Each transcription costs ~$0.01-0.05 depending on audio length.
 6. **Tell the user estimated cost before starting:** "Scraping X accounts × Y reels + transcribing top Z. Estimated cost: $X-Y Apify + ~$Z Deepgram."
 
-**Updated curl patterns with cost caps:**
+**Async pattern (mandatory — sync endpoint returns empty):**
 ```bash
-# Apify Instagram scraper (with cost cap)
-curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&timeout=120&maxTotalChargeUsd=1.00" ...
+# Step 1: Launch (cost cap in URL)
+curl -s "https://api.apify.com/v2/acts/apify~instagram-reel-scraper/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" -X POST ...
+
+# Step 2: Poll until SUCCEEDED
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]?token=[APIFY_API_KEY]"
+
+# Step 3: Fetch dataset
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]/dataset/items?token=[APIFY_API_KEY]&format=json"
+
+# Step 4: Abort immediately
+curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY_API_KEY]"
 ```
 
 ### Rules

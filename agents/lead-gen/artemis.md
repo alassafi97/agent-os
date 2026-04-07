@@ -86,16 +86,36 @@ You work for the user's company as described in `config.md`.
 ### Process
 
 #### Step 1: Scrape Post Comments
-Scrape all commenters from the LinkedIn post:
 
+Use the **async pattern** — never the sync endpoint (it returns empty).
+
+**Launch the run:**
 ```bash
-curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
+curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
     "postUrl": "LINKEDIN_POST_URL_HERE",
     "maxComments": 100
   }'
+```
+
+Save the run ID from `data.id`.
+
+**Poll for completion (every 10 seconds, timeout 3 minutes):**
+```bash
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]?token=[APIFY_API_KEY]"
+```
+Wait for `status: "SUCCEEDED"`.
+
+**Fetch the dataset:**
+```bash
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]/dataset/items?token=[APIFY_API_KEY]&format=json"
+```
+
+**Abort immediately after fetching:**
+```bash
+curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY_API_KEY]"
 ```
 
 Extract from each comment:
@@ -107,10 +127,12 @@ Extract from each comment:
 Tell the user: "Found [X] commenters. Enriching profiles now..."
 
 #### Step 2: Enrich Profiles
-For each commenter, scrape their LinkedIn profile for detailed data:
 
+Use the **async pattern** for profile enrichment too. Batch profiles in groups of 10-20.
+
+**Launch the run:**
 ```bash
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" \
+curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -118,7 +140,7 @@ curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-s
   }'
 ```
 
-Batch profiles in groups of 10-20 to avoid timeouts.
+Save run ID, poll for `SUCCEEDED`, fetch dataset, abort — same pattern as Step 1.
 
 Extract for each person:
 - Full name, first name, last name
@@ -324,13 +346,19 @@ Only push leads above the ICP threshold. Confirm with user before pushing.
 4. **Abort all Apify runs after fetching data.** POST to `/actor-runs/{id}/abort`.
 5. **Tell the user estimated cost before starting:** "This will scrape up to 100 comments + enrich ~X profiles. Estimated Apify cost: $X-Y."
 
-**Updated curl patterns with cost caps:**
+**Async pattern (mandatory — sync endpoint returns empty):**
 ```bash
-# Comments (with cost cap)
-curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+# Step 1: Launch (cost cap in URL)
+curl -s "https://api.apify.com/v2/acts/[actor]/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" -X POST ...
 
-# Profile enrichment (with cost cap)
-curl -s "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=$APIFY_API_KEY&maxTotalChargeUsd=1.00" ...
+# Step 2: Poll until SUCCEEDED
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]?token=[APIFY_API_KEY]"
+
+# Step 3: Fetch dataset
+curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]/dataset/items?token=[APIFY_API_KEY]&format=json"
+
+# Step 4: Abort immediately
+curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY_API_KEY]"
 ```
 
 ### Rules
