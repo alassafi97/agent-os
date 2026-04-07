@@ -130,11 +130,17 @@ curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]/dataset/items?token=[APIFY
 curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY_API_KEY]"
 ```
 
-Extract from each comment:
-- Commenter's name
-- LinkedIn profile URL
-- Comment text (important — shows intent and context)
-- Title/headline (if available in comment data)
+Extract from each comment (verified field names from live test):
+- `author.name` — commenter's full name
+- `author.profile_url` — LinkedIn profile URL (ready to use)
+- `author.headline` — title + company as a single string (e.g. `"Co-Founder @ Workflows.io | Growth playbooks using AI"`). Split on ` @ ` to get title and company separately.
+- `text` — comment text (critical — shows intent and context)
+- `author.is_post_author` — filter these out (post owner's own replies, not leads)
+- `stats.total_reactions` — engagement signal
+- `totalComments` — total comment count on the post (use to decide if you need more than `maxComments`)
+- `replies[]` — nested replies within the comment (flatten to capture reply engagers too)
+
+**Filter out** any item where `author.is_post_author = true`.
 
 Tell the user: "Found [X] commenters. Enriching profiles now..."
 
