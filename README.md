@@ -79,6 +79,7 @@ Same framework, different pitch for every prospect.
 | Harry | Viral hook generator — 15–20 platform-specific hooks from your business context | EXA (optional) |
 | Iris | Content intelligence — daily news research → 10–15 content ideas tied to real articles | EXA, FIRECRAWL (optional) |
 | Picasso | Instagram reel analyzer — scrapes reels, extracts spoken hooks, finds winning patterns | APIFY, DEEPGRAM |
+| Tron | TikTok competitor analyzer — scrapes profiles, transcribes hooks, finds winning patterns, generates 10 hook ideas | APIFY, DEEPGRAM |
 | Artemis | LinkedIn post comment hunter — scrapes commenters, scores ICP fit, writes DMs | APIFY |
 
 ---

@@ -81,7 +81,7 @@ When the user describes what they need (instead of naming a specific agent), use
 - Harry: Viral hook generator — researches business, generates 15-20+ platform-specific hooks
 - Iris: Content intelligence — daily news research across topics → extract insights → generate 10-15 content ideas tied to real articles
 - Picasso: Instagram reel analyzer — scrapes reels, transcribes hooks, generates content ideas
-- Tron: Ad copy and paid media
+- Tron: TikTok competitor analyzer — scrapes profiles, transcribes hooks, finds winning patterns, generates hook ideas
 - Cosmo (Brand): Brand strategy and messaging
 - Cosmo (Image): Brand image and visual identity
 
@@ -109,7 +109,7 @@ If the task doesn't clearly match one agent, present 2-3 options and let the use
 | Harry | Marketing | Viral hook generator (multi-platform) | EXA, FIRECRAWL (optional) |
 | Iris | Marketing | Daily news research → content ideas (topics → articles → hooks) | EXA | FIRECRAWL |
 | Picasso | Marketing | Instagram reel analyzer + hook extractor | APIFY, DEEPGRAM |
-| Tron | Marketing | Ad copy & paid media | — |
+| Tron | Marketing | TikTok competitor analyzer — scrapes profiles, transcribes hooks, finds winning patterns, generates hook ideas | APIFY, DEEPGRAM |
 | Cosmo (Brand) | Marketing | Brand strategy & messaging | — |
 | Cosmo (Image) | Marketing | Brand image & visual identity | — |
 | Metis | Utils | Research & analysis — any topic → structured report + SVG diagram as HTML | EXA (optional) |

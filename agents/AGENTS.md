@@ -105,7 +105,7 @@ Here's how the agents work together for a full go-to-market motion:
 | 10 | Picasso | Marketing | Instagram reel analyzer + spoken hook extractor | APIFY, DEEPGRAM | Ready |
 | 11 | Cicero | Marketing | One idea → research → 7 platform-optimized formats (LinkedIn, X, Newsletter, YouTube, Reels, TikTok, Shorts) | EXA (optional) | Ready |
 | 12 | Iris | Marketing | Daily news research → content ideas (topics → articles → hooks → ready to post) | EXA, FIRECRAWL (optional) | Ready |
-| 13 | Tron | Marketing | Ad copy & paid media | — | Coming Soon |
+| 13 | Tron | Marketing | TikTok competitor analyzer — scrapes profiles, transcribes hooks, finds winning patterns, generates hook ideas | APIFY, DEEPGRAM | Ready |
 | 14 | Cosmo (Brand) | Marketing | Brand strategy & messaging | — | Coming Soon |
 | 15 | Cosmo (Image) | Marketing | Brand image & visual identity | — | Coming Soon |
 | 16 | Metis | Utils | Research & analysis — any topic → structured report + SVG diagram as HTML | EXA (optional) | Ready |
