@@ -114,8 +114,16 @@ outputs/api-tests/  ← verified API behavior logs
 
 ## Getting Started
 
-1. Open this folder in Claude Code
-2. Type `/setup`
-3. Type `/campaign`
+1. Clone or download this repo
+   ```bash
+   git clone https://github.com/alassafi97/agent-os.git
+   ```
+   > No git? Click the green **Code** button → **Download ZIP** → unzip → open the folder in Claude Code.
+
+2. Open the folder in Claude Code
+
+3. Type `/setup`
+
+4. Type `/campaign`
 
 That's it.
