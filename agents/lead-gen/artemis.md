@@ -91,7 +91,7 @@ Use the **async pattern** — never the sync endpoint (it returns empty).
 
 **Launch the run:**
 ```bash
-curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" \
+curl -s "https://api.apify.com/v2/acts/benjarapi~linkedin-post-comments/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -101,6 +101,18 @@ curl -s "https://api.apify.com/v2/acts/harvestapi~linkedin-post-comments/runs?to
 ```
 
 Save the run ID from `data.id`.
+
+**If that actor fails**, fallback to:
+```bash
+curl -s "https://api.apify.com/v2/acts/unseenuser~linkedin-post-comment-reaction-extractor-no-cookies/runs?token=[APIFY_API_KEY]&maxTotalChargeUsd=1.00" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "posts": ["LINKEDIN_POST_URL_HERE"],
+    "maxComments": 100
+  }'
+```
+Note: this actor uses `posts` (array) not `postUrl`.
 
 **Poll for completion (every 10 seconds, timeout 3 minutes):**
 ```bash
@@ -291,7 +303,7 @@ Save the full report to `outputs/artemis/[YYYY-MM-DD-HHMMSS]-[post-description].
 ---
 
 ## Methodology
-- **Scraper used:** harvestapi~linkedin-post-comments + harvestapi~linkedin-profile-scraper
+- **Scraper used:** benjarapi~linkedin-post-comments + dev_fusion~linkedin-profile-scraper
 - **Scoring criteria:** Based on config.md ICP and Qualification Criteria
 - **DM tone:** [Tone from config.md Brand Voice]
 - **Threshold applied:** [Score] minimum
@@ -336,7 +348,7 @@ Only push leads above the ICP threshold. Confirm with user before pushing.
 > **These rules are mandatory. See CLAUDE.md "API Cost Safety" for full details.**
 
 **Apify scrapers used by Artemis:**
-- `harvestapi~linkedin-post-comments` — scrapes post comments. Lower cost, typically small datasets.
+- `benjarapi~linkedin-post-comments` — scrapes post comments. Lower cost, typically small datasets. Fallback: `unseenuser~linkedin-post-comment-reaction-extractor-no-cookies` (uses `posts` array input).
 - `dev_fusion~linkedin-profile-scraper` — scrapes profiles for enrichment. Cost scales with batch size.
 
 **Mandatory safeguards:**

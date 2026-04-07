@@ -117,6 +117,8 @@ curl -s "https://api.apify.com/v2/actor-runs/[RUN_ID]/dataset/items?token=[APIFY
 curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY_API_KEY]"
 ```
 
+**Handle unavailable accounts:** If a dataset item contains `"error": "not_found"`, that account is private, deleted, or renamed. Warn the user: "Account @[handle] is private or unavailable — skipping. Try a different competitor." Continue with remaining accounts.
+
 For each reel, extract:
 - `shortCode` — reel identifier
 - `caption` — post caption text
@@ -154,7 +156,7 @@ Extract the same fields. This gives us the baseline to compare against.
 Identify the top 10-15 reels by engagement rate across ALL scraped reels (competitors + user). For each top reel that has an `audioUrl`, transcribe using Deepgram:
 
 ```bash
-curl -s "https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true" \
+curl -s "https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true&punctuate=true" \
   -H "Authorization: Token $DEEPGRAM_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"url": "AUDIO_URL_HERE"}'

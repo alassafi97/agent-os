@@ -138,9 +138,9 @@ curl -s -X POST "https://api.apify.com/v2/actor-runs/[RUN_ID]/abort?token=[APIFY
 - `playCount` — views
 - `shareCount` — shares
 - `videoMeta.duration` — length in seconds
+- `videoMeta.subtitleLinks` — array of subtitle file URLs (**note: nested under `videoMeta`, not top-level**)
 - `createTimeISO` — posted date
 - `hashtags` — array of tag objects
-- `subtitleLinks` — array of subtitle file URLs (if available)
 - `musicMeta.musicName` — audio used
 
 **Calculate engagement rate for each video:**
@@ -157,26 +157,16 @@ If views is 0, skip the video.
 For each video, try to get the hook via this priority order:
 
 **Option A — Subtitles (free, preferred):**
-If `subtitleLinks` contains entries, fetch the first subtitle file (usually SRT or VTT format):
+Check `videoMeta.subtitleLinks` (nested under `videoMeta`, not top-level). If the array has entries, fetch the first URL:
 ```bash
 curl -s "[SUBTITLE_URL]"
 ```
-Parse the subtitle file to extract the first 15 seconds of spoken text. This is the hook.
+The file is **WebVTT format** regardless of what the CDN URL says. Parse the timestamps to extract the first ~15 seconds of spoken text — that's the hook. Subtitles are present on ~80% of videos and cost nothing.
 
-**Option B — Deepgram transcription (if no subtitles):**
-Only transcribe the **top 15 videos by engagement rate** across all accounts — never transcribe everything.
+**Option B — Caption fallback:**
+If `videoMeta.subtitleLinks` is empty or missing, use the `text` field (caption) as a proxy for content theme. Note: "No subtitle available — using caption as hook approximation."
 
-```bash
-curl -s "https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true&punctuate=true&utterances=true" \
-  -H "Authorization: Token [DEEPGRAM_API_KEY]" \
-  -H "Content-Type: application/json" \
-  -d '{"url": "[VIDEO_PLAYBACK_URL]"}'
-```
-
-Extract transcript from `results.channels[0].alternatives[0].transcript`.
-
-**Option C — Caption fallback:**
-If neither subtitles nor transcription is available, use the video caption (`text` field) as a proxy for content theme. Note: "Hook not available — using caption."
+> **Note:** Deepgram transcription via video URL is not supported for TikTok — `playAddr` and direct video URLs are not accessible externally. Do not attempt Deepgram for TikTok. Subtitles → caption fallback is the full hook extraction pipeline.
 
 **Hook extraction rules:**
 - The hook = the first 1-3 sentences spoken, typically the first 5-15 seconds
