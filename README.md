@@ -128,3 +128,25 @@ outputs/api-tests/  ← verified API behavior logs
 4. Type `/campaign`
 
 That's it.
+
+---
+
+## Getting Updates
+
+New agents and improvements ship regularly. How you update depends on how you installed:
+
+**If you cloned with git (recommended):**
+```bash
+git pull origin master
+```
+Or just type `/update` inside Claude Code — it pulls the latest, shows you what changed, and flags if anything needs your attention.
+
+**If you downloaded a ZIP:**
+1. Download the latest ZIP from [github.com/alassafi97/agent-os](https://github.com/alassafi97/agent-os)
+2. Unzip to a new folder
+3. Copy your personal files across: `.env`, `config.md`, `outreach.md`
+4. Open the new folder in Claude Code
+
+Your `outputs/` folder and personal config files are never overwritten — they're gitignored.
+
+> **Tip:** Clone instead of ZIP so you can update with one command.
