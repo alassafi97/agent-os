@@ -59,8 +59,8 @@ Finds leads → researches each company's operations → writes outreach that pi
 | **Iris** | Email marketing — newsletters, drip campaigns, nurture sequences |
 | **Picasso** | Instagram reel analyzer — scrapes competitor + your reels, transcribes hooks, finds winning patterns, generates content ideas |
 | **Tron** | Ad copy — paid social, Google Ads, landing page copy |
-| **Cosmo (Brand)** | Brand strategy — positioning, messaging frameworks, voice guidelines |
-| **Cosmo (Image)** | Visual identity — brand imagery direction, style guides |
+| **Cosmo (Brand)** | Brand image generator — reads reference images from `assets/brand-references/`, extracts visual language, generates brand-consistent images via Flux Pro |
+| **Cosmo (Character)** | Character image generator — reads reference photos from `assets/character-references/`, uploads best ref to fal.ai, generates identity-consistent personal brand images via `consistent-character` model |
 
 **Typical flow:** Cosmo Brand (strategy) → Cicero or Harry (content) → Tron (ads) → Iris (email nurture)
 

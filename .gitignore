@@ -9,6 +9,12 @@ outreach.md
 # Agent outputs (user-specific)
 outputs/
 
+# User reference images (local only — drop your own in)
+assets/brand-references/*
+assets/character-references/*
+!assets/brand-references/.gitkeep
+!assets/character-references/.gitkeep
+
 # Test files
 config.test.md
 
