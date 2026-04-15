@@ -171,7 +171,7 @@ Save everything to `config.md` after each round. Use the user's exact words — 
 
 After config.md is populated, set up the outreach voice. This controls how every email and LinkedIn message sounds.
 
-Read `outreach.md`. If it still has the default example data (check if Social Proof mentions "Altari" or "Ahmed"), walk the user through customizing it:
+Read `outreach.md`. If it still has the default example data (check if Social Proof section is empty or contains placeholder text), walk the user through customizing it:
 
 "Your business profile is set. Now let's configure how your outreach sounds — this controls every email and LinkedIn message the campaign writes."
 

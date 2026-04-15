@@ -124,7 +124,7 @@ Based on the research and synthesis, generate **10–15 content ideas** using th
 - **Lead with the hook** — write the first line of the post, not just a description
 - **Platform-specific** — tag each idea with the best platform (LinkedIn / Instagram / TikTok)
 - **Variety** — mix formats: opinion, how-to, case study angle, contrarian take, behind-the-scenes
-- **Altari lens** — frame insights through AI automation, operational efficiency, or outbound sales where relevant
+- **Business lens** — frame insights through the user's industry, ICP, and core offer as defined in `config.md`
 - **Always include key stats** — every idea must have 2–4 specific metrics, numbers, or data points pulled directly from the source article. No vague claims. Numbers give credibility and make content shareable.
 - **Include post body outline** — don't just describe the idea. Write out 4–6 bullet points showing the actual structure/flow of the post so it's ready to expand into a full draft.
 
@@ -193,16 +193,11 @@ If topics aren't provided, Iris will default to topics relevant to your `config.
 ## Default Topics (if none provided)
 
 Pulled from `config.md` context — Iris will auto-generate relevant topics based on:
-- Your industry (AI automation)
-- Your ICP (B2B services, SaaS, franchise operations)
+- Your industry and niche
+- Your ICP (who you sell to)
 - Current trends in your space
 
-Default set:
-1. AI agents and automation
-2. Sales automation tools
-3. B2B outbound sales trends
-4. AI in business operations
-5. Startup and SMB growth strategies
+If `config.md` doesn't provide enough context, ask the user for 3–6 topics before proceeding.
 
 ---
 
@@ -213,5 +208,5 @@ Default set:
 - **Ideas must be grounded in the research.** No generic content ideas that could have been written without the news.
 - **Cap Exa at 6 total searches.** If 6 topics, 1 search each. Never redundant searches.
 - **Cap Firecrawl at 5 pages.** Quality over quantity.
-- **Match the brand voice from `config.md`.** Ideas should sound like Ahmed wrote them — direct, bold, specific.
+- **Match the brand voice from `config.md`.** Ideas should sound like the user wrote them — direct, bold, specific.
 - **Save output before showing summary.** Always write to `outputs/iris/` first.
