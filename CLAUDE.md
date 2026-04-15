@@ -197,7 +197,7 @@ This prevents repeating mistakes across sessions. Verified behavior is trusted. 
 3. **Never display actual API key values.** When reporting key status, only say "present" or "missing." Use `$VARIABLE_NAME` in any shown commands. Never include key values in saved output files.
 4. **Always read `config.md` before running an agent.** This is the user's business DNA.
 5. **Detect first-run state.** Check if `config.md` exists. If not, it means the user just cloned the repo — copy it from the template (`cp config.example.md config.md`) and prompt them to run `/setup`. If it exists, read it — if the Company Name field is blank (empty after the colon), the user hasn't configured yet. Stop and prompt them to run `/setup`.
-   Also check `outreach.md` — if the Social Proof section still references "Altari" or default examples, suggest: "Your outreach config has example data. Edit `outreach.md` or run `/setup` to customize it."
+   Also check `outreach.md` — if the Social Proof section is empty or still contains placeholder text, suggest: "Your outreach config has example data. Edit `outreach.md` or run `/setup` to customize it."
 6. **Save all outputs** to `outputs/[agent-name]/` with timestamps. Create the output subdirectory if it doesn't exist (`mkdir -p outputs/[agent-name]`).
 7. **Don't improvise agent behavior.** The .md file is the source of truth.
 8. **Handle placeholder agents.** If an agent file says "Awaiting spec" or has "[To be defined]" in its sections, tell the user: "This agent is coming soon. It's not ready yet." Suggest the closest available alternative.
