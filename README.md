@@ -1,3 +1,5 @@
+<img width="2560" height="1212" alt="AgentOS Teaser" src="https://github.com/user-attachments/assets/581ea56b-3c94-4a08-b53a-a74118b1a38a" />
+
 # Agent OS
 
 <!-- TODO: Add demo GIF or screenshot of /campaign dashboard output here -->
