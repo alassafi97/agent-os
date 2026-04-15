@@ -235,15 +235,85 @@ Read `.env` and check which keys are present (non-empty). Report:
 - Which agents need additional keys
 
 ### Step 5: Done
-"You're all set! Here's what to do next:
 
-**Run your first campaign:** Type `/campaign` — it will find leads matching your ICP, research each company's operations, and write outreach that pitches AI automation specific to each prospect's business. You get an HTML dashboard + CSVs ready for Instantly/HeyReach.
+Display this full command reference so the user knows exactly what they can do:
 
-**Or run individual agents:**
-- `/felix` — find leads
-- `/pluto` — research a specific prospect
-- `/atlas` — research a company
-- `/emilio` — write a cold email sequence
-- Type 'list agents' to see everything available.
+---
 
-Your business profile is saved in config.md, outreach voice in outreach.md, and keys in .env. Edit any of these anytime."
+"You're all set. Here's everything you can run:
+
+---
+
+**🚀 Start here**
+
+`/campaign` — Full outbound pipeline in one command. Finds companies matching your ICP, discovers decision-makers with verified emails, researches each company's operations, and writes business-specific email + LinkedIn sequences. Delivers an HTML dashboard + CSVs ready to import into Instantly or HeyReach.
+
+---
+
+**🔍 Research**
+
+`/pluto` — Deep research on a specific person. LinkedIn profile, company role, recent activity, talking points for outreach.
+
+`/atlas` — Deep research on a company. Business model, operations, tech stack, qualification score, where AI could fit.
+
+`/themis` — Competitor teardown. Positioning, pricing, strengths, weaknesses, how to beat them.
+
+---
+
+**🎯 Lead Generation**
+
+`/felix` — Find companies and contacts. Searches Apollo + Exa for companies matching your ICP, returns decision-makers with verified emails and LinkedIn URLs.
+
+`/artemis` — LinkedIn post comment hunter. Give it any LinkedIn post URL — it scrapes every commenter, enriches their profiles, scores ICP fit, and writes personalised DMs for the best matches.
+
+---
+
+**✉️ Outreach**
+
+`/emilio` — Cold email sequences. Give it a prospect and it writes a 3-step research-backed email sequence. Can push directly to Instantly.
+
+`/leonardo` — LinkedIn outreach. Connection request + DM sequence for any prospect. Can push directly to HeyReach.
+
+---
+
+**📣 Content & Marketing**
+
+`/cicero` — Multi-platform content engine. One idea or draft → LinkedIn post, X thread, newsletter, YouTube script, YouTube Short, Instagram Reel script, TikTok script. Pick the platforms you want.
+
+`/harry` — Viral hook generator. Give it your business or any topic — returns 15–20 platform-specific hooks using proven frameworks.
+
+`/iris` — Content intelligence. Give it topics and it researches today's news, extracts key insights and stats, and generates 10–15 content ideas tied to real articles. Opens as an HTML report.
+
+`/picasso` — Instagram reel analyzer. Give it competitor handles — it scrapes their reels, transcribes the spoken hooks, finds what's working, and generates content ideas for your account.
+
+`/tron` — TikTok competitor analyzer. Same as Picasso but for TikTok. Scrapes profiles, transcribes hooks, identifies winning patterns, generates 10 hook ideas.
+
+`/cosmo-brand` — Brand image generator. Give it reference images and a prompt — generates on-brand visuals using Flux Pro (fal.ai). Great for ads, content, decks.
+
+`/cosmo-character` — Personal brand image generator. Generates consistent photos of you in any scene or style using your reference photos.
+
+---
+
+**🛠️ Utilities**
+
+`/eddie` — Post-discovery prototype builder. Paste in call notes or a transcript — it extracts the build brief, chooses the right format (React app, diagram, Notion doc), and generates a ready-to-send visual demo. Use this before your follow-up meeting.
+
+`/metis` — Research engine for anything. Any question → structured HTML report with findings, analysis, and diagrams. Use when no other agent fits.
+
+---
+
+**⚙️ System**
+
+`/list-agents` — Browse the full agent catalog with descriptions and required API keys.
+
+`/setup` — Re-run this wizard anytime to update your profile, outreach voice, or API keys.
+
+`/new-agent` — Build a new custom agent from a spec. Generates the .md file, slash command, and updates the catalog automatically.
+
+---
+
+Your business profile: `config.md`
+Your outreach voice: `outreach.md`
+Your API keys: `.env`
+
+Edit any of these directly or re-run `/setup` to update them."
